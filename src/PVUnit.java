@@ -2,12 +2,12 @@ public class PVUnit {
     private Integer id;
     private double kwpeek;
     private String wechselrichter;
-    private int plz;
+    private String plz;
     private String ort;
     private String strasse;
-    private int hausnummer;
+    private String hausnummer;
 
-    public PVUnit(Integer id, double kwpeek, String wechselrichter, String ort, int plz, String strasse, int hausnummer) {
+    public PVUnit(Integer id, double kwpeek, String wechselrichter, String plz, String ort, String strasse, String hausnummer) {
         this.id = id;
         this.kwpeek = kwpeek;
         this.wechselrichter = wechselrichter;
@@ -22,15 +22,20 @@ public class PVUnit {
 
     @Override
     public String toString() {
-        return "PVUnit{" +
-                "id=" + id +
-                ", kwpeek=" + kwpeek +
-                ", wechselrichter='" + wechselrichter + '\'' +
-                ", plz=" + plz +
-                ", ort='" + ort + '\'' +
-                ", strasse='" + strasse + '\'' +
-                ", hausnummer=" + hausnummer +
-                '}';
+        return kwpeek +"kWp ("+wechselrichter+") in "+ort+", "+ strasse + " "+hausnummer;
+    }
+
+    public static PVUnit getPVUnitFromLine(String line) {
+        String[] parts = line.split(";");
+        return new PVUnit(
+                Integer.valueOf(parts[0]),
+                Double.parseDouble(parts[1]),
+                parts[2],
+                parts[3],
+                parts[4],
+                parts[5],
+                parts[6]
+        );
     }
 
     public Integer getId() {
@@ -57,11 +62,11 @@ public class PVUnit {
         this.wechselrichter = wechselrichter;
     }
 
-    public int getPlz() {
+    public String getPlz() {
         return plz;
     }
 
-    public void setPlz(int plz) {
+    public void setPlz(String plz) {
         this.plz = plz;
     }
 
@@ -81,11 +86,11 @@ public class PVUnit {
         this.strasse = strasse;
     }
 
-    public int getHausnummer() {
+    public String getHausnummer() {
         return hausnummer;
     }
 
-    public void setHausnummer(int hausnummer) {
+    public void setHausnummer(String hausnummer) {
         this.hausnummer = hausnummer;
     }
 }
